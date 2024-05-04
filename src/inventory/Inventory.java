@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import main.*;
 import database.DataBaseMethods;
 
 public class Inventory extends DataBaseMethods {
@@ -39,6 +39,8 @@ public class Inventory extends DataBaseMethods {
 			
 			e.printStackTrace();
 		}
+		OrganicAuraUI ui = new OrganicAuraUI();
+        ui.refreshInventoryTable();
 		
 	}
 
@@ -65,6 +67,8 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		OrganicAuraUI ui = new OrganicAuraUI();
+        ui.refreshInventoryTable();
 
 	}
 
@@ -91,6 +95,8 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		OrganicAuraUI ui = new OrganicAuraUI();
+        ui.refreshInventoryTable();
 
 	}
 
@@ -119,6 +125,8 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		OrganicAuraUI ui = new OrganicAuraUI();
+        ui.refreshInventoryTable();
 
 	}
 
@@ -153,30 +161,25 @@ public class Inventory extends DataBaseMethods {
 	}
 	
 	public void deduct(int reduction) {
-		
-		Connection connect = connectInventoryDB();
-		String query = "UPDATE product " + "SET quantity = ? " + "WHERE product_id = ?";
-		
-		try (PreparedStatement st = connect.prepareStatement(query)) {
-			
-			quantity = quantity - reduction;
-			
-			st.setInt(1, getQuantity());
-			st.setInt(2, getProductId());
+	    Connection connect = connectInventoryDB();
+	    String query = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
+	    
+	    try (PreparedStatement st = connect.prepareStatement(query)) {
+	        st.setInt(1, reduction);
+	        st.setInt(2, getProductId());
 
-			int rowsAffected = st.executeUpdate();
+	        int rowsAffected = st.executeUpdate();
 
-			if (rowsAffected > 0) {
-				System.out.println("Successfully Updated");
-			} else {
-				System.out.println("Update Failed");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+	        if (rowsAffected > 0) {
+	            System.out.println("Successfully Updated");
+	        } else {
+	            System.out.println("Update Failed");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 //	------------------------Getters & Setters --------------------------
 
