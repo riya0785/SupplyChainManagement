@@ -27,7 +27,9 @@ public class OrganicAura {
 				break;
 			} else {
 				loginchoice = displayLogin(scanner);
-
+				if(loginchoice == 0) {
+					continue;
+				}
 				login(loginchoice);
 
 			}
@@ -43,11 +45,11 @@ public class OrganicAura {
 	// Methods-------------------------------------------
 
 	private static int displayRegister(Scanner scan) {
-		System.out.println("Choose");
+		System.out.println("\nChoose");
 		System.out.println("1. Login");
 		System.out.println("2. Register");
 		System.out.println("0. Exit");
-		int choice = getUserInput(scan, 2);
+		int choice = getUserInput(2);
 		return choice;
 	}
 
@@ -57,20 +59,20 @@ public class OrganicAura {
 		System.out.println("1. Client");
 		System.out.println("2. Admin");
 		System.out.println("0. Return");
-		int choice = getUserInput(scan, 2);
+		int choice = getUserInput(2);
 		return choice;
 	}
 
 	// Method to get user input with error handling
-	public static int getUserInput(Scanner scanner, int range) {
+	public static int getUserInput(int range) {
 		int choice = -1;
 		boolean validInput = false;
+		Scanner scan = new Scanner(System.in);
 
 		while (!validInput) {
 			System.out.print("Enter your choice: ");
 			try {
-				choice = scanner.nextInt();
-
+				choice = scan.nextInt();
 				if (choice < 0) {
 					throw new choiceOutOfBoundsException("Negative inputs are not accepted. Enter a valid choice");
 				} else if (choice > range) {
@@ -109,7 +111,9 @@ public class OrganicAura {
 
 			if (exist > 0) {
 				System.out.println("Login Successfull");
+				
 				Clients client = new Clients();
+				client.setUsername(username);
 				client.buy();
 			} else {
 				System.out.println("Login Failed");
@@ -155,7 +159,7 @@ public class OrganicAura {
 			System.out.println("4. Update items in the inventory");
 			System.out.println("5. Delete items in the inventory");
 			System.out.println("0. Logout");
-			choice = getUserInput(scan, 5);
+			choice = getUserInput(5);
 
 			switch (choice) {
 			case 1:

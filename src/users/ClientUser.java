@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import database.DBConnector;
+import inventory.Orders;
 
 public class ClientUser extends DBConnector{
 	
@@ -24,22 +25,25 @@ public class ClientUser extends DBConnector{
 		System.out.println("Enter Password: ");
 		setPassword(scan.next());
 		
+		int rowsAffected = 0;
+		
 		String query = "INSERT INTO clients (uname, upassword) VALUES (?,?)";
 		
 		try(PreparedStatement st = connect.prepareStatement(query)){
 			st.setString(1, username);
 			st.setString(2, getPassword());
 			
-			int rowsAffected = st.executeUpdate();
+			rowsAffected = st.executeUpdate();
 			
 			if(rowsAffected > 0) {
 				System.out.println("Successfully Registered");
 			}
 			else {
-				System.out.println("Registration Failed");
+				System.out.println("Registration Failed. User Already Exists");
 			}
 		} catch (SQLException e) {
 			e.getMessage();
+			System.err.println("Registration Failed. User Already Exists");
 		}	
 		
 	}
@@ -51,7 +55,7 @@ public class ClientUser extends DBConnector{
 		String query = "SELECT * FROM clients where uname = ? and upassword = ?";
 		
 		ResultSet result = null;
-		
+			
 		try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
 			// Set parameter for the prepared statement
 			preparedStatement.setString(1, getUsername());
