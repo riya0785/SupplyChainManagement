@@ -159,8 +159,9 @@ public class OrganicAura {
 			System.out.println("3. Show the Inventory");
 			System.out.println("4. Update items in the inventory");
 			System.out.println("5. Delete items in the inventory");
+			System.out.println("6. Check Order History");
 			System.out.println("0. Logout");
-			choice = getUserInput(5);
+			choice = getUserInput(6);
 
 			switch (choice) {
 			case 1:
@@ -182,6 +183,9 @@ public class OrganicAura {
 			case 5:
 				actions.delete();
 				break;
+				
+			case 6:
+				actions.showOrders();
 
 			case 0:
 				break;

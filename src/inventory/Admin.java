@@ -59,6 +59,11 @@ public class Admin {
 
 	}
 	
+	public void showOrders() {
+		Orders o = new Orders();
+		o.show();
+	}
+	
 	public void show() {
 		i.show();
 	}

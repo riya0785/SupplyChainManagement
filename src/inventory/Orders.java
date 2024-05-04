@@ -2,6 +2,7 @@ package inventory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import database.DataBaseMethods;
@@ -36,6 +37,32 @@ public class Orders extends DataBaseMethods {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void show() {
+		Connection connect = connectInventoryDB();
+		
+		String query = "SELECT * from orders";
+		
+		ResultSet result = null;
+		
+		try (PreparedStatement st = connect.prepareStatement(query)) {
+			
+			result = st.executeQuery();
+			
+			while(result.next()) {
+				System.out.println("------------------------");
+				System.out.println("Order ID: "+ result.getInt("order_id"));
+				System.out.println("Username: "+ result.getString("username"));
+				System.out.println("Product ID: "+ result.getInt("product_id"));
+				System.out.println("Item: "+ result.getString("item"));
+				System.out.println("Order Quantity: "+ result.getInt("order_qty"));
+				System.out.println("Price: "+result.getFloat("price"));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getOrderId() {
