@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import database.DBConnector;
-import inventory.Orders;
 
 public class ClientUser extends DBConnector{
 	
