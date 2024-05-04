@@ -1,278 +1,116 @@
 package main;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class OrganicAuraUI {
-    private JFrame frame;
-    private JPanel panel;
-    private JButton loginButton;
-    private JButton registerButton;
-    private JButton clientButton;
-    private JButton adminButton;
-    private JButton buyButton;
-    private JButton dashboardButton;
-    private JButton addItemButton;
-    private JButton updateItemButton;
-    private JButton deleteItemButton;
-    private JTextArea displayArea;
-    private JTable table;
-    private DefaultTableModel tableModel;
+public class OrganicAuraUI extends JFrame {
+    private CardLayout cardLayout;
+    private JPanel cardsPanel;
+
+    private JTextField registerUsernameField;
+    private JPasswordField registerPasswordField;
+
+    private JTextField loginUsernameField;
+    private JPasswordField loginPasswordField;
 
     public OrganicAuraUI() {
-        frame = new JFrame("Supply Chain Management System");
-        frame.setSize(600, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("OrganicAura");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 300);
+        setLocationRelativeTo(null); // Center the window
 
-        panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1, 10, 10));
+        cardLayout = new CardLayout();
+        cardsPanel = new JPanel(cardLayout);
 
-        JLabel projectLabel = new JLabel("Supply Chain Management System");
-        projectLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(projectLabel);
-
-        loginButton = new JButton("Login");
-        registerButton = new JButton("Register");
-        panel.add(loginButton);
-        panel.add(registerButton);
-
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().removeAll();
-                frame.repaint();
-                addLoginButtons();
-            }
-        });
-
+        // Initial Page
+        JPanel initialPanel = new JPanel(new GridLayout(2, 1));
+        JButton registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().removeAll();
-                frame.repaint();
-                addRegistrationFields();
+                cardLayout.show(cardsPanel, "register");
             }
         });
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardsPanel, "login");
+            }
+        });
+        initialPanel.add(registerButton);
+        initialPanel.add(loginButton);
+        cardsPanel.add(initialPanel, "initial");
 
-        frame.add(panel);
-        frame.setVisible(true);
+        // Registration Page
+        JPanel registerPanel = new JPanel(new GridLayout(3, 1));
+        registerUsernameField = new JTextField();
+        registerUsernameField.setBorder(BorderFactory.createTitledBorder("Username"));
+        registerPasswordField = new JPasswordField();
+        registerPasswordField.setBorder(BorderFactory.createTitledBorder("Password"));
+        JButton registerSubmitButton = new JButton("Register");
+        registerSubmitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Add user to database
+                register();
+            }
+        });
+        registerPanel.add(registerUsernameField);
+        registerPanel.add(registerPasswordField);
+        registerPanel.add(registerSubmitButton);
+        cardsPanel.add(registerPanel, "register");
+
+        // Login Page
+        JPanel loginPanel = new JPanel(new GridLayout(3, 1));
+        JButton clientLoginButton = new JButton("Client");
+        clientLoginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardsPanel, "clientLogin");
+            }
+        });
+        JButton adminLoginButton = new JButton("Admin");
+        // Add ActionListener for admin login if needed
+        loginPanel.add(clientLoginButton);
+        loginPanel.add(adminLoginButton);
+        cardsPanel.add(loginPanel, "login");
+
+        // Client Login Page
+        JPanel clientLoginPanel = new JPanel(new GridLayout(3, 1));
+        loginUsernameField = new JTextField();
+        loginUsernameField.setBorder(BorderFactory.createTitledBorder("Username"));
+        loginPasswordField = new JPasswordField();
+        loginPasswordField.setBorder(BorderFactory.createTitledBorder("Password"));
+        JButton clientLoginSubmitButton = new JButton("Login");
+        clientLoginSubmitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Validate user and show dashboard
+                clientLogin();
+            }
+        });
+        clientLoginPanel.add(loginUsernameField);
+        clientLoginPanel.add(loginPasswordField);
+        clientLoginPanel.add(clientLoginSubmitButton);
+        cardsPanel.add(clientLoginPanel, "clientLogin");
+
+        add(cardsPanel);
+
+        cardLayout.show(cardsPanel, "initial");
+        setVisible(true);
     }
 
-    public void addLoginButtons() {
-        panel.removeAll();
-        panel.setLayout(new GridLayout(2, 1, 10, 10));
-        clientButton = new JButton("Client");
-        adminButton = new JButton("Admin");
-        panel.add(clientButton);
-        panel.add(adminButton);
-
-        clientButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().removeAll();
-                frame.repaint();
-                addClientOptions();
-            }
-        });
-
-        adminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().removeAll();
-                frame.repaint();
-                addAdminOptions();
-            }
-        });
-
-        frame.add(panel);
-        frame.setVisible(true);
+    private void register() {
+        // Implement registration logic here
+        String username = registerUsernameField.getText();
+        String password = new String(registerPasswordField.getPassword());
+        // Add user to database
+        // Show success or failure message
     }
 
-    public void addRegistrationFields() {
-        panel.removeAll();
-        panel.setLayout(new GridLayout(6, 1, 10, 10));
-        JLabel projectLabel = new JLabel("Supply Chain Management System");
-        projectLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(projectLabel);
-
-        JLabel usernameLabel = new JLabel("Username:");
-        JTextField usernameField = new JTextField(20);
-        JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField(20);
-        JButton register = new JButton("Register");
-
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(register);
-
-        register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                // Implement registration functionality here
-                JOptionPane.showMessageDialog(frame, "User Registered Successfully!");
-                frame.getContentPane().removeAll();
-                frame.repaint();
-                addLoginButtons();
-            }
-        });
-
-        frame.add(panel);
-        frame.setVisible(true);
-    }
-
-    public void addClientOptions() {
-        panel.removeAll();
-        panel.setLayout(new BorderLayout());
-        JPanel topPanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        bottomPanel.setLayout(new BorderLayout());
-
-        buyButton = new JButton("Buy");
-        dashboardButton = new JButton("Dashboard");
-
-        topPanel.add(buyButton);
-        topPanel.add(dashboardButton);
-
-        displayArea = new JTextArea(10, 40);
-        JScrollPane scrollPane = new JScrollPane(displayArea);
-
-        String[] columns = {"Product ID", "Item", "Quantity", "Price"};
-        Object[][] data = {
-                {"1", "Item 1", "10", "100"},
-                {"2", "Item 2", "20", "200"},
-                {"3", "Item 3", "30", "300"}
-        };
-        tableModel = new DefaultTableModel(data, columns);
-        table = new JTable(tableModel);
-        JScrollPane tableScrollPane = new JScrollPane(table);
-
-        bottomPanel.add(scrollPane, BorderLayout.NORTH);
-        bottomPanel.add(tableScrollPane, BorderLayout.CENTER);
-
-        panel.add(topPanel, BorderLayout.NORTH);
-        panel.add(bottomPanel, BorderLayout.CENTER);
-
-        buyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement buy functionality here
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    String quantity = JOptionPane.showInputDialog(frame, "Enter quantity:");
-                    int qty = Integer.parseInt(quantity);
-                    int price = Integer.parseInt((String) tableModel.getValueAt(selectedRow, 3));
-                    int totalPrice = qty * price;
-                    JOptionPane.showMessageDialog(frame, "Total Price: " + totalPrice);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please select a product!");
-                }
-            }
-        });
-
-        dashboardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement dashboard functionality here
-            }
-        });
-
-        frame.add(panel);
-        frame.setVisible(true);
-    }
-
-    public void addAdminOptions() {
-        panel.removeAll();
-        panel.setLayout(new BorderLayout());
-        JPanel topPanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        bottomPanel.setLayout(new BorderLayout());
-
-        addItemButton = new JButton("Add Item");
-        updateItemButton = new JButton("Update Item");
-        deleteItemButton = new JButton("Delete Item");
-
-        topPanel.add(addItemButton);
-        topPanel.add(updateItemButton);
-        topPanel.add(deleteItemButton);
-
-        displayArea = new JTextArea(10, 40);
-        JScrollPane scrollPane = new JScrollPane(displayArea);
-
-        String[] columns = {"Product ID", "Item", "Quantity", "Price"};
-        Object[][] data = {
-                {"1", "Item 1", "10", "100"},
-                {"2", "Item 2", "20", "200"},
-                {"3", "Item 3", "30", "300"}
-        };
-        tableModel = new DefaultTableModel(data, columns);
-        table = new JTable(tableModel);
-        JScrollPane tableScrollPane = new JScrollPane(table);
-
-        bottomPanel.add(scrollPane, BorderLayout.NORTH);
-        bottomPanel.add(tableScrollPane, BorderLayout.CENTER);
-
-        panel.add(topPanel, BorderLayout.NORTH);
-        panel.add(bottomPanel, BorderLayout.CENTER);
-
-        addItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement add item functionality here
-                String productId = JOptionPane.showInputDialog(frame, "Enter Product ID:");
-                String item = JOptionPane.showInputDialog(frame, "Enter Item:");
-                String quantity = JOptionPane.showInputDialog(frame, "Enter Quantity:");
-                String price = JOptionPane.showInputDialog(frame, "Enter Price:");
-
-                String[] row = {productId, item, quantity, price};
-                tableModel.addRow(row);
-            }
-        });
-
-        updateItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement update item functionality here
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    String productId = JOptionPane.showInputDialog(frame, "Enter Product ID:");
-                    String item = JOptionPane.showInputDialog(frame, "Enter Item:");
-                    String quantity = JOptionPane.showInputDialog(frame, "Enter Quantity:");
-                    String price = JOptionPane.showInputDialog(frame, "Enter Price:");
-
-                    tableModel.setValueAt(productId, selectedRow, 0);
-                    tableModel.setValueAt(item, selectedRow, 1);
-                    tableModel.setValueAt(quantity, selectedRow, 2);
-                    tableModel.setValueAt(price, selectedRow, 3);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please select a product!");
-                }
-            }
-        });
-
-        deleteItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement delete item functionality here
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    tableModel.removeRow(selectedRow);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please select a product!");
-                }
-            }
-        });
-
-        frame.add(panel);
-        frame.setVisible(true);
+    private void clientLogin() {
+        // Implement client login logic here
+        String username = loginUsernameField.getText();
+        String password = new String(loginPasswordField.getPassword());
+        // Validate user and show dashboard
+        // If validation fails, show error message
     }
 
     public static void main(String[] args) {

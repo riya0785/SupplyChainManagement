@@ -30,6 +30,7 @@ public class Inventory extends DataBaseMethods {
 			if(result.next()) {
 				productId = result.getInt("product_id");
 				quantity = result.getInt("quantity");
+				price = result.getFloat("price");
 			}
 			
 			
