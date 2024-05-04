@@ -67,23 +67,24 @@ public class OrganicAura {
 	public static int getUserInput(int range) {
 		int choice = -1;
 		boolean validInput = false;
-		Scanner scan = new Scanner(System.in);
+		
 
 		while (!validInput) {
 			System.out.print("Enter your choice: ");
 			try {
+				Scanner scan = new Scanner(System.in);
 				choice = scan.nextInt();
 				if (choice < 0) {
-					throw new choiceOutOfBoundsException("Negative inputs are not accepted. Enter a valid choice");
+					throw new choiceOutOfBoundsException("Negative inputs are not accepted. Enter a valid choice\n");
 				} else if (choice > range) {
-					throw new choiceOutOfBoundsException("Choice is Out of Bounds. Enter a valid choice");
+					throw new choiceOutOfBoundsException("Choice is Out of Bounds. Enter a valid choice\n");
 				} else {
 					validInput = true;
 				}
 			} catch (java.util.InputMismatchException e) {
-				System.out.println("Invalid input. Please enter a number.");
+				System.err.println("Invalid input. Please enter a number.");
 			} catch (choiceOutOfBoundsException e) {
-				e.getMessage();
+				System.err.print(e.getMessage());
 			}
 		}
 		return choice;
