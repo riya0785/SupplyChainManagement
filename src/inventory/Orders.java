@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DataBaseMethods;
+import database.DBConnector;
 
-public class Orders extends DataBaseMethods {
+public class Orders extends DBConnector {
 
 	private int orderId, productId, orderQty;
 	private String username, item;

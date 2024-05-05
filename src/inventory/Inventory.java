@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DataBaseMethods;
+import database.DBConnector;
 import main.OrganicAuraUI;
 
-public class Inventory extends DataBaseMethods {
+public class Inventory extends DBConnector {
 
 	private int productId, quantity;
 	private float price;

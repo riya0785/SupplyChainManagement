@@ -33,6 +33,7 @@ public class DBConnector {
 		}
 		return connect;
 	}
+		
 	
 public Connection connectInventoryDB() {
 		
@@ -55,4 +56,6 @@ public Connection connectInventoryDB() {
 		}
 		return connect;
 	}
+	
+
 }
