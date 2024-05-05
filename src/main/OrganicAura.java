@@ -2,8 +2,8 @@ package main;
 
 import java.util.Scanner;
 
-import inventory.Admin;
-import inventory.Clients;
+import inventory.AdminAccess;
+import inventory.ClientAccess;
 import users.AdminUser;
 import users.ClientUser;
 
@@ -113,7 +113,7 @@ public class OrganicAura {
 			if (exist) {
 				System.out.println("Login Successfull");
 				
-				Clients client = new Clients();
+				ClientAccess client = new ClientAccess();
 				client.setUsername(username);
 				client.buy();
 			} else {
@@ -151,7 +151,7 @@ public class OrganicAura {
 		int choice = -1;
 
 		AdminUser user = new AdminUser();
-		Admin actions = new Admin();
+		AdminAccess actions = new AdminAccess();
 
 		while (choice != 0) {
 			System.out.println("What would you like to do?");

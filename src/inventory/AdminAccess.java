@@ -2,7 +2,7 @@ package inventory;
 
 import java.util.Scanner;
 
-public class Admin {
+public class AdminAccess {
 
 	Inventory i = new Inventory();
 

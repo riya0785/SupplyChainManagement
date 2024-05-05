@@ -20,7 +20,7 @@ public class Orders extends DataBaseMethods {
 	public Orders() {};
 
 	public Orders(String username, int productId, int orderQty, String item, float price) {
-		super();
+		this.username = username;
 		this.productId = productId;
 		this.orderQty = orderQty;
 		this.item = item;
@@ -147,7 +147,7 @@ public class Orders extends DataBaseMethods {
 	}
 
 	public float getPrice() {
-		return getOrderQty()* price;
+		return price;
 	}
 
 	public void setPrice(float price) {

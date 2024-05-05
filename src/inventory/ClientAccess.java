@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import main.OrganicAura;
 
-public class Clients extends OrganicAura {
+public class ClientAccess extends OrganicAura {
 
 	Inventory i = new Inventory();
 	Orders o = new Orders();
