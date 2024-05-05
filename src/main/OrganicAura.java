@@ -1,211 +1,211 @@
-package main;
-
-import java.util.Scanner;
-
-import inventory.AdminAccess;
-import inventory.ClientAccess;
-import users.AdminUser;
-import users.ClientUser;
-
-public class OrganicAura {
-	// ---------------------------------- MAIN
-	// ----------------------------------------------
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-
-		int choice;
-		int loginchoice;
-
-		while (true) {
-			choice = displayRegister(scanner);
-
-			if (choice == 2) {
-				register();
-				continue;
-			} else if (choice == 0) {
-				System.out.println("Exiting...");
-				break;
-			} else {
-				loginchoice = displayLogin(scanner);
-				if(loginchoice == 0) {
-					continue;
-				}
-				login(loginchoice);
-
-			}
-
-		}
-		scanner.close();
-	}
-
-	// ----------------------------------END
-	// MAIN------------------------------------------------
-
-	// ----------------------------Additional
-	// Methods-------------------------------------------
-
-	private static int displayRegister(Scanner scan) {
-		System.out.println("\nChoose");
-		System.out.println("1. Login");
-		System.out.println("2. Register");
-		System.out.println("0. Exit");
-		int choice = getUserInput(2);
-		return choice;
-	}
-
-	// Method to display the main menu
-	private static int displayLogin(Scanner scan) {
-		System.out.println("\nLogin In as:");
-		System.out.println("1. Client");
-		System.out.println("2. Admin");
-		System.out.println("0. Return");
-		int choice = getUserInput(2);
-		return choice;
-	}
-
-	// Method to get user input with error handling
-	public static int getUserInput(int range) {
-		int choice = -1;
-		boolean validInput = false;
-		
-
-		while (!validInput) {
-			System.out.print("Enter your choice: ");
-			try {
-				Scanner scan = new Scanner(System.in);
-				choice = scan.nextInt();
-				if (choice < 0) {
-					throw new choiceOutOfBoundsException("Negative inputs are not accepted. Enter a valid choice\n");
-				} else if (choice > range) {
-					throw new choiceOutOfBoundsException("Choice is Out of Bounds. Enter a valid choice\n");
-				} else {
-					validInput = true;
-				}
-			} catch (java.util.InputMismatchException e) {
-				System.err.println("Invalid input. Please enter a number.");
-			} catch (choiceOutOfBoundsException e) {
-				System.err.print(e.getMessage());
-			}
-		}
-		return choice;
-	}
-
-	private static void register() {
-		ClientUser user = new ClientUser();
-		user.add();
-	}
-
-	private static void login(int choice) {
-
-		Scanner scan = new Scanner(System.in);
-
-		System.out.println("Enter Username");
-		String username = scan.next();
-		System.out.println("Enter Password");
-		String pwd = scan.next();
-
-		if (choice == 1) {
-			ClientUser user = new ClientUser();
-			user.setUsername(username);
-			user.setPassword(pwd);
-			boolean exist = user.authenticate();
-
-			if (exist) {
-				System.out.println("Login Successfull");
-				
-				ClientAccess client = new ClientAccess();
-				client.setUsername(username);
-				client.buy();
-			} else {
-				System.out.println("Login Failed");
-				return;
-			}
-
-		} else if (choice == 2) {
-			AdminUser user = new AdminUser();
-
-			user.setUsername(username);
-			user.setPassword(pwd);
-
-			boolean exist = user.authenticate();
-			if (exist) {
-				System.out.println("Login Successfull");
-				adminfunctions();
-
-			} else {
-				System.out.println("\n** X ** Login Failed ** X **\n");
-				return;
-			}
-
-		} else {
-			return;
-		}
-
-	}
-
-	private static void adminfunctions() {
-		
-		System.out.println("--------------------------");
-		System.out.println("\nWelcome to Admin Console");
-		Scanner scan = new Scanner(System.in);
-		int choice = -1;
-
-		AdminUser user = new AdminUser();
-		AdminAccess actions = new AdminAccess();
-
-		while (choice != 0) {
-			System.out.println("What would you like to do?");
-			System.out.println("1. Add another admin user");
-			System.out.println("2. Add items in the inventory");
-			System.out.println("3. Show the Inventory");
-			System.out.println("4. Update items in the inventory");
-			System.out.println("5. Delete items in the inventory");
-			System.out.println("6. Check Order History");
-			System.out.println("0. Logout");
-			choice = getUserInput(6);
-
-			switch (choice) {
-			case 1:
-				user.add();
-				break;
-
-			case 2:
-				actions.add();
-				break;
-
-			case 3:
-				actions.show();
-				break;
-
-			case 4:
-				actions.update();
-				break;
-
-			case 5:
-				actions.delete();
-				break;
-				
-			case 6:
-				actions.showOrders();
-
-			case 0:
-				break;
-
-			}
-		}
-
-	}
-
-	public static class choiceOutOfBoundsException extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		public choiceOutOfBoundsException() {
-			super();
-		}
-
-		public choiceOutOfBoundsException(String message) {
-			super(message);
-		}
-	}
-
-}
+//package main;
+//
+//import java.util.Scanner;
+//
+//import inventory.AdminAccess;
+//import inventory.ClientAccess;
+//import users.AdminUser;
+//import users.ClientUser;
+//
+//public class OrganicAura {
+//	// ---------------------------------- MAIN
+//	// ----------------------------------------------
+//	public static void main(String[] args) {
+//		Scanner scanner = new Scanner(System.in);
+//
+//		int choice;
+//		int loginchoice;
+//
+//		while (true) {
+//			choice = displayRegister(scanner);
+//
+//			if (choice == 2) {
+//				register();
+//				continue;
+//			} else if (choice == 0) {
+//				System.out.println("Exiting...");
+//				break;
+//			} else {
+//				loginchoice = displayLogin(scanner);
+//				if(loginchoice == 0) {
+//					continue;
+//				}
+//				login(loginchoice);
+//
+//			}
+//
+//		}
+//		scanner.close();
+//	}
+//
+//	// ----------------------------------END
+//	// MAIN------------------------------------------------
+//
+//	// ----------------------------Additional
+//	// Methods-------------------------------------------
+//
+//	private static int displayRegister(Scanner scan) {
+//		System.out.println("\nChoose");
+//		System.out.println("1. Login");
+//		System.out.println("2. Register");
+//		System.out.println("0. Exit");
+//		int choice = getUserInput(2);
+//		return choice;
+//	}
+//
+//	// Method to display the main menu
+//	private static int displayLogin(Scanner scan) {
+//		System.out.println("\nLogin In as:");
+//		System.out.println("1. Client");
+//		System.out.println("2. Admin");
+//		System.out.println("0. Return");
+//		int choice = getUserInput(2);
+//		return choice;
+//	}
+//
+//	// Method to get user input with error handling
+//	public static int getUserInput(int range) {
+//		int choice = -1;
+//		boolean validInput = false;
+//		
+//
+//		while (!validInput) {
+//			System.out.print("Enter your choice: ");
+//			try {
+//				Scanner scan = new Scanner(System.in);
+//				choice = scan.nextInt();
+//				if (choice < 0) {
+//					throw new choiceOutOfBoundsException("Negative inputs are not accepted. Enter a valid choice\n");
+//				} else if (choice > range) {
+//					throw new choiceOutOfBoundsException("Choice is Out of Bounds. Enter a valid choice\n");
+//				} else {
+//					validInput = true;
+//				}
+//			} catch (java.util.InputMismatchException e) {
+//				System.err.println("Invalid input. Please enter a number.");
+//			} catch (choiceOutOfBoundsException e) {
+//				System.err.print(e.getMessage());
+//			}
+//		}
+//		return choice;
+//	}
+//
+//	private static void register() {
+//		ClientUser user = new ClientUser();
+//		user.add();
+//	}
+//
+//	private static void login(int choice) {
+//
+//		Scanner scan = new Scanner(System.in);
+//
+//		System.out.println("Enter Username");
+//		String username = scan.next();
+//		System.out.println("Enter Password");
+//		String pwd = scan.next();
+//
+//		if (choice == 1) {
+//			ClientUser user = new ClientUser();
+//			user.setUsername(username);
+//			user.setPassword(pwd);
+//			boolean exist = user.authenticate();
+//
+//			if (exist) {
+//				System.out.println("Login Successfull");
+//				
+//				ClientAccess client = new ClientAccess();
+//				client.setUsername(username);
+//				client.buy();
+//			} else {
+//				System.out.println("Login Failed");
+//				return;
+//			}
+//
+//		} else if (choice == 2) {
+//			AdminUser user = new AdminUser();
+//
+//			user.setUsername(username);
+//			user.setPassword(pwd);
+//
+//			boolean exist = user.authenticate();
+//			if (exist) {
+//				System.out.println("Login Successfull");
+//				adminfunctions();
+//
+//			} else {
+//				System.out.println("\n** X ** Login Failed ** X **\n");
+//				return;
+//			}
+//
+//		} else {
+//			return;
+//		}
+//
+//	}
+//
+//	private static void adminfunctions() {
+//		
+//		System.out.println("--------------------------");
+//		System.out.println("\nWelcome to Admin Console");
+//		Scanner scan = new Scanner(System.in);
+//		int choice = -1;
+//
+//		AdminUser user = new AdminUser();
+//		AdminAccess actions = new AdminAccess();
+//
+//		while (choice != 0) {
+//			System.out.println("What would you like to do?");
+//			System.out.println("1. Add another admin user");
+//			System.out.println("2. Add items in the inventory");
+//			System.out.println("3. Show the Inventory");
+//			System.out.println("4. Update items in the inventory");
+//			System.out.println("5. Delete items in the inventory");
+//			System.out.println("6. Check Order History");
+//			System.out.println("0. Logout");
+//			choice = getUserInput(6);
+//
+//			switch (choice) {
+//			case 1:
+//				user.add();
+//				break;
+//
+//			case 2:
+//				actions.add();
+//				break;
+//
+//			case 3:
+//				actions.show();
+//				break;
+//
+//			case 4:
+//				actions.update();
+//				break;
+//
+//			case 5:
+//				actions.delete();
+//				break;
+//				
+//			case 6:
+//				actions.showOrders();
+//
+//			case 0:
+//				break;
+//
+//			}
+//		}
+//
+//	}
+//
+//	public static class choiceOutOfBoundsException extends Exception {
+//		private static final long serialVersionUID = 1L;
+//
+//		public choiceOutOfBoundsException() {
+//			super();
+//		}
+//
+//		public choiceOutOfBoundsException(String message) {
+//			super(message);
+//		}
+//	}
+//
+//}
