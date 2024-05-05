@@ -59,6 +59,7 @@ public class Orders extends DataBaseMethods {
 				System.out.println("Order Quantity: "+ result.getInt("order_qty"));
 				System.out.println("Price: "+result.getFloat("price"));
 			}
+			System.out.println("------------------------\n");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

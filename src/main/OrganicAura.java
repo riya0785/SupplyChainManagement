@@ -144,8 +144,9 @@ public class OrganicAura {
 	}
 
 	private static void adminfunctions() {
-
-		System.out.println("Welcome to Admin Console");
+		
+		System.out.println("--------------------------");
+		System.out.println("\nWelcome to Admin Console");
 		Scanner scan = new Scanner(System.in);
 		int choice = -1;
 
