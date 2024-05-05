@@ -396,7 +396,7 @@ public class OrganicAuraUI extends DBConnector{
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
                     // Get the product details from the selected row
-                    String productId = table.getValueAt(selectedRow, 0).toString();
+                    int productId = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
                     String item = table.getValueAt(selectedRow, 1).toString();
                     float price = Float.parseFloat(table.getValueAt(selectedRow, 3).toString());
 
@@ -432,7 +432,7 @@ public class OrganicAuraUI extends DBConnector{
                 for (CartItem item : cartItems) {
                     totalPrice += item.getTotalPrice();
                     // Update inventory quantity
-                    updateInventory(Integer.parseInt(item.getProductId()), item.getQuantity());
+                    updateInventory(item.getProductId(), item.getQuantity());
                 }
 
                 // Display total price and order placed message
@@ -547,7 +547,7 @@ public class OrganicAuraUI extends DBConnector{
         return true; // Placeholder, replace with actual logic
     }
 
-    private void addToCart(String productId, String item, int quantity, float totalPrice) {
+    private void addToCart(int productId, String item, int quantity, float totalPrice) {
         // Create a new CartItem and add it to the cartItems list
         CartItem cartItem = new CartItem(productId, item, quantity, totalPrice);
         cartItems.add(cartItem);
@@ -604,35 +604,5 @@ public class OrganicAuraUI extends DBConnector{
         });
     }
     
-    
-    public class CartItem {
-        private String productId;
-        private String item;
-        private int quantity;
-        private float totalPrice;
-
-        public CartItem(String productId, String item, int quantity, float totalPrice) {
-            this.productId = productId;
-            this.item = item;
-            this.quantity = quantity;
-            this.totalPrice = totalPrice;
-        }
-
-        public String getProductId() {
-            return productId;
-        }
-
-        public String getItem() {
-            return item;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public float getTotalPrice() {
-            return totalPrice;
-        }
-    }
 
 }

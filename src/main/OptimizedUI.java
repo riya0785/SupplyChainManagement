@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import database.DBConnector;
+import inventory.CartItem;
 import inventory.Inventory;
 import inventory.Orders;
 import users.AdminUser;
@@ -269,7 +270,7 @@ public class OptimizedUI extends DBConnector {
 					JOptionPane.showMessageDialog(frame, "Login successful!");
 					frame.getContentPane().removeAll();
 					frame.repaint();
-					clientOptions();
+					clientOptions(username);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Invalid username or password!");
 				}
@@ -422,7 +423,7 @@ public class OptimizedUI extends DBConnector {
 		frame.setVisible(true);
 	}
 
-	public void clientOptions() {
+	public void clientOptions(String username) {
 		panel.removeAll();
 		panel.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
@@ -471,13 +472,14 @@ public class OptimizedUI extends DBConnector {
 		panel.add(bottomPanel, BorderLayout.CENTER);
 
 		buyButton.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Get the selected row from the table
 				int selectedRow = table.getSelectedRow();
 				if (selectedRow != -1) {
 					// Get the product details from the selected row
-					String productId = table.getValueAt(selectedRow, 0).toString();
+					int productId = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
 					String item = table.getValueAt(selectedRow, 1).toString();
 					float price = Float.parseFloat(table.getValueAt(selectedRow, 3).toString());
 
@@ -491,6 +493,10 @@ public class OptimizedUI extends DBConnector {
 
 							// Add the order to the cart
 							addToCart(productId, item, quantity, totalPrice);
+							
+							// Updating the order in the database
+							Orders order = new Orders(username, productId, quantity, item, totalPrice);
+							order.add();
 
 							// Display cart contents
 							displayCart();
@@ -515,7 +521,7 @@ public class OptimizedUI extends DBConnector {
 				for (CartItem item : cartItems) {
 					totalPrice += item.getTotalPrice();
 					// Update inventory quantity
-					updateInventory(Integer.parseInt(item.getProductId()), item.getQuantity());
+					updateInventory(item.getProductId(), item.getQuantity());
 				}
 
 				// Display total price and order placed message
@@ -526,7 +532,7 @@ public class OptimizedUI extends DBConnector {
 				cartItems.clear();
 				displayCart(); // Update the cart display
 				// Refresh inventory table display
-				refreshClientInventoryTable();
+				refreshClientInventoryTable(username);
 			}
 		});
 
@@ -763,7 +769,7 @@ public class OptimizedUI extends DBConnector {
 			return false;
 	}
 
-	private void addToCart(String productId, String item, int quantity, float totalPrice) {
+	private void addToCart(int productId, String item, int quantity, float totalPrice) {
 		// Create a new CartItem and add it to the cartItems list
 		CartItem cartItem = new CartItem(productId, item, quantity, totalPrice);
 		cartItems.add(cartItem);
@@ -776,10 +782,10 @@ public class OptimizedUI extends DBConnector {
 		;
 	}
 
-	public void refreshClientInventoryTable() {
+	public void refreshClientInventoryTable(String username) {
 		frame.getContentPane().removeAll();
 		frame.repaint();
-		clientOptions();
+		clientOptions(username);
 		;
 	}
 
@@ -849,34 +855,4 @@ public class OptimizedUI extends DBConnector {
         new OptimizedUI();
 	}
 	
- 	public class CartItem {
-		private String productId;
-		private String item;
-		private int quantity;
-		private float totalPrice;
-
-		public CartItem(String productId, String item, int quantity, float totalPrice) {
-			this.productId = productId;
-			this.item = item;
-			this.quantity = quantity;
-			this.totalPrice = totalPrice;
-		}
-
-		public String getProductId() {
-			return productId;
-		}
-
-		public String getItem() {
-			return item;
-		}
-
-		public int getQuantity() {
-			return quantity;
-		}
-
-		public float getTotalPrice() {
-			return totalPrice;
-		}
-	}
-
 }

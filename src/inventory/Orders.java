@@ -14,6 +14,18 @@ public class Orders extends DataBaseMethods {
 	private int orderId, productId, orderQty;
 	private String username, item;
 	private float price;
+	
+	
+
+	public Orders() {};
+
+	public Orders(String username, int productId, int orderQty, String item, float price) {
+		super();
+		this.productId = productId;
+		this.orderQty = orderQty;
+		this.item = item;
+		this.price = price;
+	}
 
 	public void add() {
 		Connection connect = connectInventoryDB();

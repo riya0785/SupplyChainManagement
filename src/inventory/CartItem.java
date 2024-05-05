@@ -1,23 +1,23 @@
 package inventory;
 
 public class CartItem {
-    private String productId;
+    private int productId;
     private String item;
     private int quantity;
     private float totalPrice;
 
-    public CartItem(String productId, String item, int quantity, float totalPrice) {
+    public CartItem(int productId, String item, int quantity, float totalPrice) {
         this.productId = productId;
         this.item = item;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

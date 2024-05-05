@@ -17,6 +17,15 @@ public class Inventory extends DataBaseMethods {
 	private String item;
 	
 	
+	public Inventory(int productId, int quantity, float price, String item) {
+		this.productId = productId;
+		this.quantity = quantity;
+		this.price = price;
+		this.item = item;
+	}
+
+	public Inventory() {};
+
 	public void read() {
 		Connection connect = connectInventoryDB();
 		
