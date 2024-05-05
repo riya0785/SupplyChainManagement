@@ -61,11 +61,11 @@ public class Admin {
 	
 	public void showOrders() {
 		Orders o = new Orders();
-		o.show();
+		o.showOrders();
 	}
 	
 	public void show() {
-		i.show();
+		i.showProducts();
 	}
 
 }

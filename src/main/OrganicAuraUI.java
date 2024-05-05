@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import inventory.*;
 
-public class OrganicAuraUI {
+public class OrganicAuraUI extends DBConnector{
     private JFrame frame;
     private JPanel panel;
     private JButton loginButton;
@@ -250,7 +250,7 @@ public class OrganicAuraUI {
 
     private boolean authenticateUser(String username, String password) {
         // Connect to the database and authenticate user
-        Connection c = DBConnector.connectUserDB(); // Replace with your database connection method
+        Connection c = connectUserDB(); // Replace with your database connection method
         if (c != null) {
             String query = "SELECT * FROM clients WHERE uname = ? AND upassword = ?";
             try (PreparedStatement statement = c.prepareStatement(query)) {
@@ -317,7 +317,7 @@ public class OrganicAuraUI {
 
     private boolean registerUser(String username, String password) {
         // Connect to the database and insert user information into the clients table
-        Connection c = DBConnector.connectUserDB();
+        Connection c = connectUserDB();
         if (c != null) {
             String query = "INSERT INTO clients (uname, upassword) VALUES (?, ?)";
             try (PreparedStatement statement = c.prepareStatement(query)) {
@@ -365,7 +365,7 @@ public class OrganicAuraUI {
         tableModel.setColumnIdentifiers(columns);
 
         // Fetch data from the products table and populate the table
-        try (Connection connection = DBConnector.connectInventoryDB();
+        try (Connection connection = connectInventoryDB();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM product");
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -561,7 +561,7 @@ public class OrganicAuraUI {
         tableModel.setRowCount(0);
 
         // Fetch data from the products table and populate the table
-        try (Connection connection = DBConnector.connectInventoryDB();
+        try (Connection connection = connectInventoryDB();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM product");
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -603,4 +603,36 @@ public class OrganicAuraUI {
             }
         });
     }
+    
+    
+    public class CartItem {
+        private String productId;
+        private String item;
+        private int quantity;
+        private float totalPrice;
+
+        public CartItem(String productId, String item, int quantity, float totalPrice) {
+            this.productId = productId;
+            this.item = item;
+            this.quantity = quantity;
+            this.totalPrice = totalPrice;
+        }
+
+        public String getProductId() {
+            return productId;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public float getTotalPrice() {
+            return totalPrice;
+        }
+    }
+
 }

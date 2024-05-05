@@ -19,7 +19,7 @@ public class Clients extends OrganicAura {
 		while (cont) {
 			try {
 				scan = new Scanner(System.in);
-				i.show();
+				i.showProducts();
 				o.setUsername(getUsername());  // Updating the Username to the orders
 				
 				System.out.println("\nWhat would you like to buy?");

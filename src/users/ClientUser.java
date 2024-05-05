@@ -18,18 +18,20 @@ public class ClientUser extends DBConnector{
 	Connection connect = connectUserDB();
 	Scanner scan = new Scanner(System.in);
 	
-	public void add() {
-		System.out.println("Enter Username: ");
-		username =  scan.next();
-		System.out.println("Enter Password: ");
-		setPassword(scan.next());
+	public int add() {
+//		System.out.println("Enter Username: ");
+//		username =  scan.next();
+		
+//		System.out.println("Enter Password: ");
+//		setPassword(scan.next());
+		
 		
 		int rowsAffected = 0;
 		
 		String query = "INSERT INTO clients (uname, upassword) VALUES (?,?)";
 		
 		try(PreparedStatement st = connect.prepareStatement(query)){
-			st.setString(1, username);
+			st.setString(1, getUsername());
 			st.setString(2, getPassword());
 			
 			rowsAffected = st.executeUpdate();
@@ -43,13 +45,14 @@ public class ClientUser extends DBConnector{
 		} catch (SQLException e) {
 			e.getMessage();
 			System.err.println("Registration Failed. User Already Exists");
-		}	
+		}
+		return rowsAffected;
 		
 	}
 	
 
-	public int authenticate() {
-		int exist = 0;
+	public boolean authenticate() {
+		boolean exist = false;
 				
 		String query = "SELECT * FROM clients where uname = ? and upassword = ?";
 		
@@ -65,7 +68,7 @@ public class ClientUser extends DBConnector{
 
 			// Display user information
 			if (result.next()) {
-				exist = 1;
+				exist = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

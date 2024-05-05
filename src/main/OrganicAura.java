@@ -108,9 +108,9 @@ public class OrganicAura {
 			ClientUser user = new ClientUser();
 			user.setUsername(username);
 			user.setPassword(pwd);
-			int exist = user.authenticate();
+			boolean exist = user.authenticate();
 
-			if (exist > 0) {
+			if (exist) {
 				System.out.println("Login Successfull");
 				
 				Clients client = new Clients();
@@ -127,8 +127,8 @@ public class OrganicAura {
 			user.setUsername(username);
 			user.setPassword(pwd);
 
-			int exist = user.authenticate();
-			if (exist > 0) {
+			boolean exist = user.authenticate();
+			if (exist) {
 				System.out.println("Login Successfull");
 				adminfunctions();
 

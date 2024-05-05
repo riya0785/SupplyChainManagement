@@ -20,8 +20,8 @@ public class AdminUser extends DBConnector{
 	
 	Connection connect = connectUserDB();
 	
-	public int authenticate() {
-		int exist = 0;
+	public boolean authenticate() {
+		boolean exist = false;
 		// Connecting to the DB
 		Connection connect = connectUserDB();
 
@@ -41,7 +41,7 @@ public class AdminUser extends DBConnector{
 
 			// Display user information
 			if (result.next()) {
-				exist = 1;
+				exist = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,19 +51,21 @@ public class AdminUser extends DBConnector{
 	
 	}
 	
-	public void add() {
-		System.out.println("Enter Username: ");
-		username =  scan.next();
-		System.out.println("Enter Password: ");
-		setPassword(scan.next());
+	public int add() {
+//		System.out.println("Enter Username: ");
+//		username =  scan.next();
+//		System.out.println("Enter Password: ");
+//		setPassword(scan.next());
+		
+		int rowsAffected = 0;
 		
 		String query = "INSERT INTO admins (aname, apassword) VALUES (?,?)";
 		
 		try(PreparedStatement st = connect.prepareStatement(query)){
-			st.setString(1, username);
+			st.setString(1, getUsername());
 			st.setString(2, getPassword());
 			
-			int rowsAffected = st.executeUpdate();
+			rowsAffected = st.executeUpdate();
 			
 			if(rowsAffected > 0) {
 				System.out.println("Successfully Registered");
@@ -73,7 +75,8 @@ public class AdminUser extends DBConnector{
 			}
 		} catch (SQLException e) {
 			e.getMessage();
-		}	
+		}
+		return rowsAffected;
 		
 	}
 	

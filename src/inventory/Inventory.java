@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import main.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import database.DataBaseMethods;
+import main.OrganicAuraUI;
 
 public class Inventory extends DataBaseMethods {
 
@@ -67,9 +70,7 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		OrganicAuraUI ui = new OrganicAuraUI();
-        ui.refreshInventoryTable();
-
+		
 	}
 
 	public void update() {
@@ -95,9 +96,7 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		OrganicAuraUI ui = new OrganicAuraUI();
-        ui.refreshInventoryTable();
-
+		
 	}
 
 
@@ -125,50 +124,75 @@ public class Inventory extends DataBaseMethods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		OrganicAuraUI ui = new OrganicAuraUI();
-        ui.refreshInventoryTable();
 
-	}
-
-	public void show() {
-
-		Connection connect = connectInventoryDB();
-		String query = "SELECT * FROM product";
-
-		ResultSet result = null;
-
-		try (PreparedStatement st = connect.prepareStatement(query)) {
-			result = st.executeQuery();
-
-			while (result.next()) {
-
-				productId = result.getInt("product_id");
-				item = result.getString("item");
-				price = result.getFloat("price");
-				quantity = result.getInt("quantity");
-
-				System.out.println("-----------------------------");
-				System.out.println("Product ID: " + productId);
-				System.out.println("Product Name: " + item);
-				System.out.println("Price: " + price);
-				System.out.println("Quantity in Stock: " + quantity);
-				System.out.println("-----------------------------");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void deduct(int reduction) {
+	public List<Object[]> showProducts() {
+	    List<Object[]> productList = new ArrayList<>();
+	    Connection connect = connectInventoryDB();
+	    String query = "SELECT * FROM product";
+
+	    try (PreparedStatement st = connect.prepareStatement(query);
+	         ResultSet result = st.executeQuery()) {
+	        while (result.next()) {
+	            int productId = result.getInt("product_id");
+	            String item = result.getString("item");
+	            int quantity = result.getInt("quantity");
+	            float price = result.getFloat("price");
+
+	            Object[] row = {productId, item, quantity, price};
+	            productList.add(row);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return productList;
+	}
+
+//	public ResultSet show() {
+//
+//		Connection connect = connectInventoryDB();
+//		String query = "SELECT * FROM product";
+//
+//		ResultSet result = null;
+//
+//		try (PreparedStatement st = connect.prepareStatement(query)) {
+//			result = st.executeQuery();
+			
+//			while (result.next()) {
+
+//				productId = result.getInt("product_id");
+//				item = result.getString("item");
+//				price = result.getFloat("price");
+//				quantity = result.getInt("quantity");
+//
+//				System.out.println("-----------------------------");
+//				System.out.println("Product ID: " + productId);
+//				System.out.println("Product Name: " + item);
+//				System.out.println("Price: " + price);
+//				System.out.println("Quantity in Stock: " + quantity);
+//				System.out.println("-----------------------------");
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//		
+//	}
+	
+	public int deduct(int reduction) {
 	    Connection connect = connectInventoryDB();
 	    String query = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
+	    
+	    int rowsAffected = 0;
 	    
 	    try (PreparedStatement st = connect.prepareStatement(query)) {
 	        st.setInt(1, reduction);
 	        st.setInt(2, getProductId());
 
-	        int rowsAffected = st.executeUpdate();
+	        rowsAffected = st.executeUpdate();
 
 	        if (rowsAffected > 0) {
 	            System.out.println("Successfully Updated");
@@ -178,6 +202,7 @@ public class Inventory extends DataBaseMethods {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	    return rowsAffected;
 	}
 
 
