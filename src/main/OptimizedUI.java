@@ -100,7 +100,7 @@ public class OptimizedUI extends DBConnector {
 		frame.setVisible(true);
 	}
 
-	protected void styleButton(JButton button) {
+	protected  void styleButton(JButton button) {
 		button.setBackground(new Color(52, 152, 219)); // Set background color
 		button.setForeground(Color.WHITE); // Set font color
 		button.setFocusPainted(false); // Remove focus border

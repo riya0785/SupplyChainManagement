@@ -342,7 +342,7 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		user.setPassword(password);
 		int success = user.add();
 
-		if (success > 1) {
+		if (success > 0) {
 			return true;
 		} else
 			return false;
