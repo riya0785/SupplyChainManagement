@@ -2,7 +2,6 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -37,10 +36,6 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		panel.removeAll();
 		panel.setLayout(new GridLayout(2, 1, 10, 10));
 
-		JLabel projectLabel = new JLabel("Supply Chain Management System");
-		projectLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		projectLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Increase font size
-		panel.add(projectLabel);
 
 		// Create login and register buttons with styling
 		loginButton = new JButton("Login");
@@ -54,6 +49,7 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		buttonPanel2.add(loginButton);
 		buttonPanel2.add(registerButton);
 
+		panel.add(new JPanel());
 		panel.add(buttonPanel2);
 
 		// Add action listeners to login and register buttons
@@ -119,6 +115,8 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		passwordPanel.add(passwordField, gbc);
 
 		JButton login = new JButton("Login");
+		styleButton(login);
+		
 
 		panel.add(usernamePanel);
 		panel.add(passwordPanel);
@@ -160,6 +158,7 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		JLabel passwordLabel = new JLabel("Password:");
 		JPasswordField passwordField = new JPasswordField(20);
 		JButton register = new JButton("Register");
+		styleButton(register);
 
 		panel.add(usernameLabel);
 		panel.add(usernameField);
@@ -191,6 +190,7 @@ public class ClientUI extends OptimizedUI implements UIActions {
 
 	@Override
 	public void dashboard(String username) {
+		frame.setSize(650, 400);
 		panel.removeAll();
 		panel.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
@@ -199,14 +199,18 @@ public class ClientUI extends OptimizedUI implements UIActions {
 		bottomPanel.setLayout(new BorderLayout());
 
 		JButton buyButton = new JButton("Buy");
-		JButton checkoutButton = new JButton("Checkout"); // New button for checkout
+		styleButton(buyButton);
+		JButton checkoutButton = new JButton("Checkout");
+		styleButton(checkoutButton);
 		JButton logoutButton = new JButton("Logout");
+		styleLogoutButton(logoutButton);
+		
 
 		topPanel.add(buyButton);
 		topPanel.add(checkoutButton); // Add the checkout button
 		topPanel.add(logoutButton);
 
-		displayArea = new JTextArea(10, 40);
+		displayArea = new JTextArea(10, 50);
 		JScrollPane scrollPane = new JScrollPane(displayArea);
 
 		// Fetch product details from the products table in the database

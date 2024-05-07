@@ -7,10 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DataBaseMethods;
+import database.DBConnector;
+
 
 // Class to manage orders in the inventory system
-public class Orders extends DataBaseMethods {
+public class Orders extends DBConnector {
 
     // Instance variables
     private int orderId, productId, orderQty;

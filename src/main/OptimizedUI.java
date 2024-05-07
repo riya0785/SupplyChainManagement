@@ -1,9 +1,9 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -52,12 +52,16 @@ public class OptimizedUI extends DBConnector {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(2, 1, 10, 10));
-
-		JLabel projectLabel = new JLabel("Supply Chain Management System");
-		projectLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		projectLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Increase font size
-		panel.add(projectLabel);
+		panel.setLayout(new GridLayout(3, 1, 10, 10));
+		
+		JLabel title = new JLabel("Supply Chain Management", SwingConstants.CENTER);
+        Font heading = new Font("Times Roman", Font.BOLD, 20);
+        title.setFont(heading);
+        title.setPreferredSize(new Dimension(300, 50));
+        title.setOpaque(true);
+        title.setBackground(Color.decode("#12cbfd"));
+        title.setForeground(Color.white);
+        frame.getContentPane().add(title, BorderLayout.PAGE_START);
 
 		// Create client and admin buttons with styling
 		clientButton = new JButton("Client");
@@ -67,10 +71,11 @@ public class OptimizedUI extends DBConnector {
 		styleButton(adminButton); // Apply styling to admin button
 
 		// Add client and admin buttons to a sub-panel with FlowLayout
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(clientButton);
 		buttonPanel.add(adminButton);
 
+		panel.add(new JPanel());
 		panel.add(buttonPanel);
 
 		// Add action listeners to client and admin buttons
@@ -107,6 +112,48 @@ public class OptimizedUI extends DBConnector {
 		button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
 		button.setPreferredSize(new Dimension(200, 50)); // Set button size
 		button.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25)); // Set padding
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor
+		// Add hover effect
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				button.setBackground(new Color(41, 128, 185));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				button.setBackground(new Color(52, 152, 219));
+			}
+		});
+	}
+	
+	protected void styleLogoutButton(JButton button) {
+		button.setBackground(Color.RED); // Set background color
+		button.setForeground(Color.WHITE); // Set font color
+		button.setFocusPainted(false); // Remove focus border
+		button.setFont(new Font("Arial", Font.BOLD, 12)); // Set font
+		button.setPreferredSize(new Dimension(100, 50)); // Set button size
+		button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Set padding
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor
+		// Add hover effect
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				button.setBackground(Color.WHITE);
+				button.setForeground(Color.red);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				button.setBackground(Color.red);
+				button.setForeground(Color.white);
+			}
+		});
+	}
+	
+	protected void styleDashboardButton(JButton button) {
+		button.setBackground(new Color(52, 152, 219)); // Set background color
+		button.setForeground(Color.WHITE); // Set font color
+		button.setFocusPainted(false); // Remove focus border
+		button.setFont(new Font("Arial", Font.BOLD, 14)); // Set font
+		button.setPreferredSize(new Dimension(100, 50)); // Set button size
+		button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Set padding
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor
 		// Add hover effect
 		button.addMouseListener(new java.awt.event.MouseAdapter() {

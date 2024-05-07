@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -111,6 +112,7 @@ public class AdminUI extends OptimizedUI implements UIActions{
 		passwordPanel.add(passwordField, gbc);
 
 		JButton login = new JButton("Login");
+		styleButton(login);
 
 		panel.add(usernamePanel);
 		panel.add(passwordPanel);
@@ -152,6 +154,7 @@ public class AdminUI extends OptimizedUI implements UIActions{
 		JLabel passwordLabel = new JLabel("Password:");
 		JPasswordField passwordField = new JPasswordField(20);
 		JButton register = new JButton("Register");
+		styleButton(register);
 
 		panel.add(usernameLabel);
 		panel.add(usernameField);
@@ -192,11 +195,20 @@ public class AdminUI extends OptimizedUI implements UIActions{
 		bottomPanel.setLayout(new BorderLayout());
 
 		JButton addAdmin = new JButton("Add Admin");
+		styleDashboardButton(addAdmin);
 		JButton addItemButton = new JButton("Add Item");
+		styleDashboardButton(addItemButton);
 		JButton updateItemButton = new JButton("Update Item");
+		styleDashboardButton(updateItemButton);
 		JButton deleteItemButton = new JButton("Delete Item");
+		styleDashboardButton(deleteItemButton);
 		JButton orderHistoryButton = new JButton("Order History");
+		styleDashboardButton(orderHistoryButton);
+		orderHistoryButton.setPreferredSize(new Dimension(150,50));
 		JButton logoutButton = new JButton("Logout");
+		styleLogoutButton(logoutButton);
+		
+		
 
 		topPanel.add(addAdmin);
 		topPanel.add(addItemButton);
@@ -277,13 +289,13 @@ public class AdminUI extends OptimizedUI implements UIActions{
 				// Implement update item functionality here
 				int selectedRow = table.getSelectedRow();
 				if (selectedRow != -1) {
-					String productId = JOptionPane.showInputDialog(frame, "Enter Product ID:");
+//					String productId = JOptionPane.showInputDialog(frame, "Enter Product ID:");
 					String item = JOptionPane.showInputDialog(frame, "Enter Item:");
 					String quantity = JOptionPane.showInputDialog(frame, "Enter Quantity:");
 					String price = JOptionPane.showInputDialog(frame, "Enter Price:");
 
 					// Updating Table
-					tableModel.setValueAt(productId, selectedRow, 0);
+					String productId =  tableModel.getValueAt(selectedRow, 0).toString();
 					tableModel.setValueAt(item, selectedRow, 1);
 					tableModel.setValueAt(quantity, selectedRow, 2);
 					tableModel.setValueAt(price, selectedRow, 3);

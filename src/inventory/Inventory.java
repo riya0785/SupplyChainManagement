@@ -1,3 +1,5 @@
+package inventory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -5,10 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DataBaseMethods;
-import main.OrganicAuraUI;
+import database.DBConnector;
 
-public class Inventory extends DataBaseMethods {
+public class Inventory extends DBConnector {
 
     private int productId, quantity;
     private float price;
@@ -42,9 +43,6 @@ public class Inventory extends DataBaseMethods {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // Refresh inventory table in the UI
-        OrganicAuraUI ui = new OrganicAuraUI();
-        ui.refreshInventoryTable();
     }
 
     // Method to add a new product to the database
