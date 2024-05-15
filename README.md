@@ -43,7 +43,7 @@ Access the 'Order History' to view and manage all purchase orders.
 
 ## Dashboard
 Overview:
-The dashboard provides a visual overview of key metrics, including inventory levels, order statuses, and more.
+The dashboard provides a visual overview of key metrics, including inventory levels, order statuses, and other functionalities.
 
 Exceptions are also handelled very carefully.
 
