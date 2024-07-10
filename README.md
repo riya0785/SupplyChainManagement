@@ -47,10 +47,7 @@ Access the 'Order History' to view and manage all purchase orders.
 Overview:
 The dashboard provides a visual overview of key metrics, including inventory levels, order statuses, and other functionalities.
 
-Exceptions are also handelled very carefully.
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Exceptions are also handled very carefully.
 
 ## Acknowledgements
 We would like to thank the open-source community for their valuable contributions and resources that made this project possible.
