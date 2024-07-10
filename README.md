@@ -14,7 +14,9 @@ Dashboard: Visual representation of inventory status.
 Ensure you have the following installed on your machine:
 
 1.Java Development Kit (JDK) 11 or later
+
 2.Apache Maven for dependency management
+
 3.MySQL or any other supported database for storing inventory and user data
 
 ## Usage
