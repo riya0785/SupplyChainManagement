@@ -52,3 +52,4 @@ Exceptions are also handled very carefully.
 ## Acknowledgements
 We would like to thank the open-source community for their valuable contributions and resources that made this project possible.
 
+Thanks
